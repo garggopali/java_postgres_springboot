@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: giftcarddemo
+    ports:
+      - "5432:5432"
+    networks:
+      - springboot-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  springboot-app:
+    build: .
+    container_name: springboot_container
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/giftcarddemo
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "9092:9092"
+    networks:
+      - springboot-network
+
+networks:
+  springboot-network:
+
+volumes:
+  postgres-data:
