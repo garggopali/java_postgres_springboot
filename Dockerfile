@@ -10,7 +10,7 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # Expose the port that your Java application runs on
-EXPOSE 9092
+EXPOSE 8080
 
 # Run the Java application
 #CMD ["java", "-jar", "app.jar"]
